@@ -1,0 +1,14 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Unity specific files
+*.cs     diff=csharp
+*.cginc  text
+*.shader text
+*.mat    text
+*.anim   text
+*.meta   merge=unityyamlmerge
+
+# Large binary files
+Library/PackageCache/com.unity.burst@1.8.14/.Runtime/libburst-llvm-16.dylib filter=lfs diff=lfs merge=lfs
+Library/PackageCache/com.unity.toolchain.win-x86_64-linux-x86_64@2.0.9/data~/payload.tar.7z filter=lfs diff=lfs merge=lfs
