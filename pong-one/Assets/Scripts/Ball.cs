@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public float initialForce = 500f; // Increased the initial force for a noticeable start
+    public float initialForce = 500f;
     public float constantSpeed = 10f;
+    public float maxBounceAngle = 75f; // Maximum angle at which the ball can bounce off
 
     private Rigidbody2D rb;
     private Vector2 initialDirection;
@@ -13,24 +14,12 @@ public class Ball : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // Ensure the Rigidbody2D has the correct settings
-        rb.gravityScale = 0;
-        rb.angularDrag = 10f; // Prevent unwanted rotation
-        rb.drag = 0; // No linear drag for consistent speed
-
         LaunchBall();
     }
 
     void LaunchBall()
     {
-        // Log the launch to help with debugging
-        Debug.Log("Launching Ball");
-
-        // Choose a random initial direction
         initialDirection = Random.Range(0, 2) == 0 ? Vector2.right : Vector2.left;
-
-        // Apply an initial force
         rb.AddForce(initialDirection * initialForce, ForceMode2D.Impulse);
     }
 
@@ -38,8 +27,17 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Paddle"))
         {
-            Vector2 newVelocity = rb.velocity.normalized * constantSpeed;
-            rb.velocity = newVelocity;
+            Vector2 paddlePosition = collision.transform.position;
+            float hitPoint = transform.position.y - paddlePosition.y;
+            float paddleHeight = collision.collider.bounds.size.y;
+            float bounceAngle = (hitPoint / paddleHeight) * maxBounceAngle;
+
+            Vector2 bounceDirection = new Vector2(
+                rb.velocity.x > 0 ? 1 : -1,
+                Mathf.Tan(bounceAngle * Mathf.Deg2Rad)
+            ).normalized;
+
+            rb.velocity = bounceDirection * constantSpeed;
         }
     }
 

@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
     public KeyCode upKey = KeyCode.W;
     public KeyCode downKey = KeyCode.S;
 
-    // Reference to the Paddle script
     private Paddle paddle;
 
     void Start()
