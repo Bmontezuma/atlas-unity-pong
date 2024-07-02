@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+using TMPro;
+using UnityEngine.UI;
+
 public class ScoreUIScript : MonoBehaviour
 {
     void Start()
