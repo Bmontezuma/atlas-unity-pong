@@ -32,4 +32,11 @@ public class Paddle : MonoBehaviour
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
     }
+
+    // New method to move the paddle based on a specific y position
+    public void MovePaddle(float positionY)
+    {
+        Vector3 targetPosition = new Vector3(transform.localPosition.x, Mathf.Clamp(positionY, -boundaryY, boundaryY), transform.localPosition.z);
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
+    }
 }
