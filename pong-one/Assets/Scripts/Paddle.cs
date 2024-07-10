@@ -1,42 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Paddle : MonoBehaviour
 {
     public float speed = 10f;
-    public float boundaryY = 300f; // Adjust this value based on your game's playable area
 
-    void Update()
+    private Vector3 startPosition;
+
+    void Start()
     {
-        Vector3 position = transform.localPosition;
+        startPosition = transform.position;
+    }
 
-        if (position.y > boundaryY)
-        {
-            position.y = boundaryY;
-        }
-        if (position.y < -boundaryY)
-        {
-            position.y = -boundaryY;
-        }
-
-        transform.localPosition = position;
+    public void Move(Vector2 direction)
+    {
+        float newYPosition = Mathf.Clamp(transform.position.y + direction.y * speed * Time.deltaTime, -200f, 200f);
+        transform.position = new Vector3(startPosition.x, newYPosition, startPosition.z);
     }
 
     public void MoveUp()
     {
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
+        float newYPosition = Mathf.Clamp(transform.position.y + speed * Time.deltaTime, -200f, 200f);
+        transform.position = new Vector3(startPosition.x, newYPosition, startPosition.z);
     }
 
     public void MoveDown()
     {
-        transform.Translate(Vector3.down * speed * Time.deltaTime);
-    }
-
-    // New method to move the paddle based on a specific y position
-    public void MovePaddle(float positionY)
-    {
-        Vector3 targetPosition = new Vector3(transform.localPosition.x, Mathf.Clamp(positionY, -boundaryY, boundaryY), transform.localPosition.z);
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
+        float newYPosition = Mathf.Clamp(transform.position.y - speed * Time.deltaTime, -200f, 200f);
+        transform.position = new Vector3(startPosition.x, newYPosition, startPosition.z);
     }
 }
