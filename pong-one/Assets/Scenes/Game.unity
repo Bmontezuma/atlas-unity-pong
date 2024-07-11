@@ -3056,7 +3056,6 @@ GameObject:
   - component: {fileID: 1482772921}
   - component: {fileID: 1482772920}
   - component: {fileID: 1482772924}
-  - component: {fileID: 1482772925}
   m_Layer: 5
   m_Name: Ball
   m_TagString: Ball
@@ -3171,25 +3170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca04140ff5ea1c41bf5a8e03d03d631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialForce: 10
+  initialForce: 300
   ballSpeed: 300
   accelerationRate: 0.1
   maxSpeed: 500
---- !u!114 &1482772925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482772918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eea4934c94ee25469ad8efdfa13b774, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startSpeed: 5
-  extraSpeed: 0.5
-  maxSpeed: 10
 --- !u!1 &1578454490
 GameObject:
   m_ObjectHideFlags: 0
