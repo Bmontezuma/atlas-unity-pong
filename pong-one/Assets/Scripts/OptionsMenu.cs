@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
-using System.Collections.Generic; // Add this line
+using System.Collections.Generic;
 
 public class OptionsMenu : MonoBehaviour
 {
@@ -18,13 +18,26 @@ public class OptionsMenu : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("OptionsMenu Start");
+
         // Load and apply saved settings
         LoadSettings();
 
-        // Add listeners to UI components
-        volumeSlider.onValueChanged.AddListener(SetVolume);
-        saveButton.onClick.AddListener(SaveSettings);
-        backButton.onClick.AddListener(BackToMainMenu);
+        // Add listeners to UI components if they are not null
+        if (volumeSlider != null)
+            volumeSlider.onValueChanged.AddListener(SetVolume);
+        else
+            Debug.LogError("Volume Slider is not assigned in the Inspector");
+
+        if (saveButton != null)
+            saveButton.onClick.AddListener(SaveSettings);
+        else
+            Debug.LogError("Save Button is not assigned in the Inspector");
+
+        if (backButton != null)
+            backButton.onClick.AddListener(BackToMainMenu);
+        else
+            Debug.LogError("Back Button is not assigned in the Inspector");
 
         // Initialize resolution dropdown
         InitializeResolutionDropdown();
@@ -32,31 +45,65 @@ public class OptionsMenu : MonoBehaviour
 
     void LoadSettings()
     {
-        // Load saved settings using PlayerPrefs
-        volumeSlider.value = PlayerPrefs.GetFloat("Volume", 0.75f);
-        graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", 2);
-        fullscreenToggle.isOn = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        Debug.Log("LoadSettings called");
 
-        // Apply loaded settings
+        if (volumeSlider != null)
+            volumeSlider.value = PlayerPrefs.GetFloat("Volume", 0.75f);
+        else
+            Debug.LogError("Volume Slider is not assigned in the Inspector");
+
+        if (graphicsDropdown != null)
+            graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", 2);
+        else
+            Debug.LogError("Graphics Dropdown is not assigned in the Inspector");
+
+        if (fullscreenToggle != null)
+            fullscreenToggle.isOn = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        else
+            Debug.LogError("Fullscreen Toggle is not assigned in the Inspector");
+
         ApplySettings();
     }
 
     void ApplySettings()
     {
-        // Apply settings based on UI component values
-        audioMixer.SetFloat("Volume", Mathf.Log10(volumeSlider.value) * 20);
-        QualitySettings.SetQualityLevel(graphicsDropdown.value);
-        Screen.fullScreen = fullscreenToggle.isOn;
+        Debug.Log("ApplySettings called");
+
+        if (volumeSlider != null && audioMixer != null)
+            audioMixer.SetFloat("Volume", Mathf.Log10(volumeSlider.value) * 20);
+        else
+            Debug.LogError("Volume Slider or Audio Mixer is not assigned in the Inspector");
+
+        if (graphicsDropdown != null)
+            QualitySettings.SetQualityLevel(graphicsDropdown.value);
+        else
+            Debug.LogError("Graphics Dropdown is not assigned in the Inspector");
+
+        if (fullscreenToggle != null)
+            Screen.fullScreen = fullscreenToggle.isOn;
+        else
+            Debug.LogError("Fullscreen Toggle is not assigned in the Inspector");
     }
 
     public void SaveSettings()
     {
-        // Save settings using PlayerPrefs
-        PlayerPrefs.SetFloat("Volume", volumeSlider.value);
-        PlayerPrefs.SetInt("GraphicsQuality", graphicsDropdown.value);
-        PlayerPrefs.SetInt("Fullscreen", fullscreenToggle.isOn ? 1 : 0);
+        Debug.Log("SaveSettings called");
 
-        // Apply settings
+        if (volumeSlider != null)
+            PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+        else
+            Debug.LogError("Volume Slider is not assigned in the Inspector");
+
+        if (graphicsDropdown != null)
+            PlayerPrefs.SetInt("GraphicsQuality", graphicsDropdown.value);
+        else
+            Debug.LogError("Graphics Dropdown is not assigned in the Inspector");
+
+        if (fullscreenToggle != null)
+            PlayerPrefs.SetInt("Fullscreen", fullscreenToggle.isOn ? 1 : 0);
+        else
+            Debug.LogError("Fullscreen Toggle is not assigned in the Inspector");
+
         ApplySettings();
 
         // Optional: Show a confirmation message
@@ -65,18 +112,27 @@ public class OptionsMenu : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        // Load the main menu scene
+        Debug.Log("BackToMainMenu called");
         SceneManager.LoadScene("MainMenu");
     }
 
     void SetVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", Mathf.Log10(volume) * 20);
+        if (audioMixer != null)
+            audioMixer.SetFloat("Volume", Mathf.Log10(volume) * 20);
+        else
+            Debug.LogError("Audio Mixer is not assigned in the Inspector");
     }
 
     void InitializeResolutionDropdown()
     {
         resolutions = Screen.resolutions;
+        if (resolutionDropdown == null)
+        {
+            Debug.LogError("Resolution Dropdown is not assigned in the Inspector");
+            return;
+        }
+
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
@@ -97,14 +153,20 @@ public class OptionsMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-
-        resolutionDropdown.onValueChanged.AddListener(delegate { SetResolution(resolutionDropdown.value); });
+        resolutionDropdown.onValueChanged.AddListener(SetResolution);
     }
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (resolutionIndex >= 0 && resolutionIndex < resolutions.Length)
+        {
+            Resolution resolution = resolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        }
+        else
+        {
+            Debug.LogError("Invalid resolution index");
+        }
     }
 
     public void ToggleFullScreen(bool isFullScreen)

@@ -861,9 +861,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 459183888}
+      - m_Target: {fileID: 1730954470}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
-        m_MethodName: BackToMainMenu
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1164,6 +1164,7 @@ MonoBehaviour:
   volumeSlider: {fileID: 486244388}
   graphicsDropdown: {fileID: 0}
   fullscreenToggle: {fileID: 599281828}
+  resolutionDropdown: {fileID: 0}
   saveButton: {fileID: 1934274694}
   backButton: {fileID: 242304733}
   audioMixer: {fileID: 24100000, guid: 05966a252220e3f4aa23806a1bc5f210, type: 2}
@@ -1478,9 +1479,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 459183888}
+      - m_Target: {fileID: 459183883}
         m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
-        m_MethodName: SaveSettings
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2865,6 +2866,7 @@ MonoBehaviour:
   volumeSlider: {fileID: 486244388}
   graphicsDropdown: {fileID: 0}
   fullscreenToggle: {fileID: 599281828}
+  resolutionDropdown: {fileID: 0}
   saveButton: {fileID: 1934274694}
   backButton: {fileID: 242304733}
   audioMixer: {fileID: 24100000, guid: 05966a252220e3f4aa23806a1bc5f210, type: 2}
